@@ -18,7 +18,7 @@ const displayTemp = function(data, scale) {
     let currentTemp = getConvertedTemp(data, scale)
     currentTemp = Math.round(currentTemp)
     let displayScale = scale === 'c' ? 'C' : 'F'
-    
+
     let tempDisplay = document.querySelector('#tempDisplay')
     tempDisplay.innerHTML = `${currentTemp}\u00B0${displayScale}`
 }
@@ -38,22 +38,22 @@ const addLocationSearchListener = function(){
     let locationInput = document.querySelector('#locationInput')
     locationInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            populateWeatherData()
+            populateDisplay()
             e.preventDefault()
           }
     })
 
     //handle button click
     let searchButton = document.querySelector('#searchSubmit')
-    searchButton.addEventListener('click', populateWeatherData)
+    searchButton.addEventListener('click', populateDisplay)
 }
 
 const getLocationData = async function () {
-    let locationArray = parseLocationInput()
+    let locationString = parseLocationInput()
     clearLocationInput()
-
+    console.log(locationString)
     try{
-        let response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationArray[0]},${locationArray[1]},${locationArray[2]}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
+        let response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationString}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
         let data = await response.json()
         if (data.length === 0){
             throw new Error('Could not find location from input')
@@ -66,20 +66,43 @@ const getLocationData = async function () {
 
 const parseLocationInput = function(){
     let locationInput = document.querySelector('#locationInput')
-    let locationArray = locationInput.value.split(',')
+    let locationArray = []
+    locationArray = locationInput.value.split(',')
+    let locationString = ''
     locationArray.forEach((element, i) => {
-        locationArray[i] = element.trim()
+        locationString = locationString === '' ? element.trim() : locationString + ',' + element.trim()
     });
-    return locationArray
+    console.log(locationString)
+    try {
+        if (locationArray[0] === ''){
+            throw new Error('Empty location input')
+        }
+        return locationString
+    } catch(error){
+        console.error(error)
+    }
 }
 
 const clearLocationInput = function() {
     locationInput.value = ''
 }
 
-const populateWeatherData = async function() {
+const displayLocation = function (data){
+    let cityElement = document.querySelector('#cityDisplay')
+    let stateElement = document.querySelector('#stateDisplay')
+    let countryElement = document.querySelector('#countryDisplay')
+
+    cityElement.innerHTML = data.name
+    stateElement.innerHTML = data.state
+    countryElement.innerHTML = data.country
+}
+
+const populateDisplay = async function() {
     let locationData = await getLocationData()
+    console.log(locationData)
     let weatherData = await getWeatherData(locationData)
+
+    displayLocation(locationData)
 
     displayTemp(weatherData, 'f')
 }
