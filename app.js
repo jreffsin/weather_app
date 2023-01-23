@@ -1,10 +1,10 @@
-const getWeatherData = async function() {
+const getWeatherData = async function(locationData) {
     try {
-        let response = await fetch('https://api.openweathermap.org/data/2.5/weather?lat=42.3178989&lon=-72.6311006&appid=5fc5590dfda3f2e525c97e184b48dc1b')
+        let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${locationData.lat}&lon=${locationData.lon}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
         let data = await response.json()
         return data
     } catch (error) {
-        console.error('error fetching data from api: ' + error)
+        console.error('Error fetching weather data from api: ' + error)
         return 'error'
     }
 }
@@ -37,26 +37,30 @@ const addLocationSearchListener = function(){
     let locationInput = document.querySelector('#locationInput')
     locationInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            getLocationData()
+            populateWeatherData()
             e.preventDefault()
           }
     })
 
     //handle button click
     let searchButton = document.querySelector('#searchSubmit')
-    searchButton.addEventListener('click', getLocationData)
+    searchButton.addEventListener('click', populateWeatherData)
 }
 
 const getLocationData = async function () {
     let locationArray = parseLocationInput()
     clearLocationInput()
 
-    console.log(locationArray)
-
-    let response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationArray[0]},${locationArray[1]},${locationArray[2]}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
-    let data = await response.json()
-    console.log(data[0])
-    console.log(data[0].lat)
+    try{
+        let response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationArray[0]},${locationArray[1]},${locationArray[2]}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
+        let data = await response.json()
+        if (data.length === 0){
+            throw new Error('Could not find location from input')
+        }
+        return data[0]
+    } catch(error){
+        console.error(error)
+    }
 }
 
 const parseLocationInput = function(){
@@ -72,5 +76,11 @@ const clearLocationInput = function() {
     locationInput.value = ''
 }
 
-getCurrentTemp('c')
+const populateWeatherData = async function() {
+    let locationData = await getLocationData()
+    let weatherData = await getWeatherData(locationData)
+
+    console.log(weatherData)
+}
+
 addLocationSearchListener()
