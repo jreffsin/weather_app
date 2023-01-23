@@ -9,17 +9,18 @@ const getWeatherData = async function(locationData) {
     }
 }
 
-const getCurrentTemp = async function(scale) {
-    let data = await getWeatherData()
-    if (data === 'error') {
-        return
-    }
-
+const getConvertedTemp = function(data, scale) {
     let convertTemp = scale === 'c' ? convertKtoC : convertKtoF
+    return convertTemp(data.main.temp)
+}
 
-    console.log(data)
-    console.log(data.main.temp)
-    console.log(convertTemp(data.main.temp))
+const displayTemp = function(data, scale) {
+    let currentTemp = getConvertedTemp(data, scale)
+    currentTemp = Math.round(currentTemp)
+    let displayScale = scale === 'c' ? 'C' : 'F'
+    
+    let tempDisplay = document.querySelector('#tempDisplay')
+    tempDisplay.innerHTML = `${currentTemp}\u00B0${displayScale}`
 }
 
 const convertKtoF = function(tempInK) {
@@ -80,7 +81,7 @@ const populateWeatherData = async function() {
     let locationData = await getLocationData()
     let weatherData = await getWeatherData(locationData)
 
-    console.log(weatherData)
+    displayTemp(weatherData, 'f')
 }
 
 addLocationSearchListener()
