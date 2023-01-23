@@ -53,7 +53,10 @@ const getLocationData = async function () {
 
     console.log(locationArray)
 
-    // let response = fetch('')
+    let response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationArray[0]},${locationArray[1]},${locationArray[2]}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
+    let data = await response.json()
+    console.log(data[0])
+    console.log(data[0].lat)
 }
 
 const parseLocationInput = function(){
