@@ -32,4 +32,42 @@ const convertKtoC = function(tempInK) {
     return tempinC
 }
 
+const addLocationSearchListener = function(){
+    //handle enter keypress
+    let locationInput = document.querySelector('#locationInput')
+    locationInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            getLocationData()
+            e.preventDefault()
+          }
+    })
+
+    //handle button click
+    let searchButton = document.querySelector('#searchSubmit')
+    searchButton.addEventListener('click', getLocationData)
+}
+
+const getLocationData = async function () {
+    let locationArray = parseLocationInput()
+    clearLocationInput()
+
+    console.log(locationArray)
+
+    // let response = fetch('')
+}
+
+const parseLocationInput = function(){
+    let locationInput = document.querySelector('#locationInput')
+    let locationArray = locationInput.value.split(',')
+    locationArray.forEach((element, i) => {
+        locationArray[i] = element.trim()
+    });
+    return locationArray
+}
+
+const clearLocationInput = function() {
+    locationInput.value = ''
+}
+
 getCurrentTemp('c')
+addLocationSearchListener()
