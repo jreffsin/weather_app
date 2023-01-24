@@ -354,10 +354,12 @@ const populateDisplay = async function() {
     let weatherData = await getWeatherData(locationData)
     console.log(weatherData)
 
-    // displayLocation(locationData)
 
     displayTemp(weatherData, 'f')
+    displayLocation(locationData)
     displayWeatherIcon(weatherData)
+    displayWeatherDescription(weatherData)
+
     toggleSearchVisibility()
     toggleDisplayVisibility()
 }
@@ -377,6 +379,12 @@ const displayWeatherIcon = function(weatherData) {
     let icon = weatherData.weather[0].icon
     weatherIcon.src = `http://openweathermap.org/img/wn/${icon}@2x.png`
 
+}
+
+const displayWeatherDescription = function(weatherData){
+    let descriptionElement = document.querySelector('#weatherDescription')
+    let descriptionData = weatherData.weather[0].description
+    descriptionElement.innerText = descriptionData
 }
 
 const toggleSearchVisibility = function() {
