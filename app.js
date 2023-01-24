@@ -338,14 +338,12 @@ const clearLocationInput = function() {
     locationInput.value = ''
 }
 
-const displayLocation = function (data){
-    let cityElement = document.querySelector('#cityDisplay')
-    let stateElement = document.querySelector('#stateDisplay')
-    let countryElement = document.querySelector('#countryDisplay')
-
-    cityElement.innerText = data.name
-    stateElement.innerText = data.state
-    countryElement.innerText = data.country
+const displayLocation = function (locationData){
+    let locationDisplayCityState = document.querySelector('#locationDisplayCityState')
+    let locationDisplayCountry = document.querySelector('#locationDisplayCountry')
+    let state = locationData.state ? ', ' + locationData.state : ''
+    locationDisplayCityState.innerText = locationData.name + state
+    locationDisplayCountry.innerText = countries[locationData.country]
 }
 
 const populateDisplay = async function() {
