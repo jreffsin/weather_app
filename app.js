@@ -68,6 +68,7 @@ const parseLocationInput = function(){
     let locationInput = document.querySelector('#locationInput')
     let locationArray = []
     locationArray = locationInput.value.split(',')
+    locationArray = assumeUSforShortArray(locationArray)
     let locationString = ''
     locationArray.forEach((element, i) => {
         locationString = locationString === '' ? element.trim() : locationString + ',' + element.trim()
@@ -105,6 +106,12 @@ const populateDisplay = async function() {
     displayLocation(locationData)
 
     displayTemp(weatherData, 'f')
+}
+const assumeUSforShortArray = function(locationArray) {
+    if (locationArray.length === 2){
+        locationArray.push('US')
+    }
+    return locationArray
 }
 
 addLocationSearchListener()
