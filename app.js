@@ -343,9 +343,9 @@ const displayLocation = function (data){
     let stateElement = document.querySelector('#stateDisplay')
     let countryElement = document.querySelector('#countryDisplay')
 
-    cityElement.innerHTML = data.name
-    stateElement.innerHTML = data.state
-    countryElement.innerHTML = data.country
+    cityElement.innerText = data.name
+    stateElement.innerText = data.state
+    countryElement.innerText = data.country
 }
 
 const populateDisplay = async function() {
