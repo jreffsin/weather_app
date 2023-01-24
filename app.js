@@ -352,10 +352,14 @@ const populateDisplay = async function() {
     let locationData = await getLocationData()
     console.log(locationData)
     let weatherData = await getWeatherData(locationData)
+    console.log(weatherData)
 
-    displayLocation(locationData)
+    // displayLocation(locationData)
 
     displayTemp(weatherData, 'f')
+    displayWeatherIcon(weatherData)
+    toggleSearchVisibility()
+    toggleDisplayVisibility()
 }
 
 const assumeUsForShortArray = function(locationArray) {
@@ -366,6 +370,23 @@ const assumeUsForShortArray = function(locationArray) {
         locationArray.push('US')
     }
     return locationArray
+}
+
+const displayWeatherIcon = function(weatherData) {
+    let weatherIcon = document.querySelector('#weatherIcon')
+    let icon = weatherData.weather[0].icon
+    weatherIcon.src = `http://openweathermap.org/img/wn/${icon}@2x.png`
+
+}
+
+const toggleSearchVisibility = function() {
+    let searchWrapper = document.querySelector('#searchWrapper')
+    searchWrapper.classList.toggle('active')
+}
+
+const toggleDisplayVisibility = function() {
+    let weatherWrapper = document.querySelector('#weatherWrapper')
+    weatherWrapper.classList.toggle('active')
 }
 
 addLocationSearchListener()
