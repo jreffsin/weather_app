@@ -49,13 +49,7 @@ table {
 
 /* End Reset */
 
-body {
-    height: 100vh;
-    width: 100vw;
-    position: relative;
-}
-
-.modal {
+/* .modal {
     height: 200px;
     width: 200px;
     background-color: red;
@@ -75,8 +69,51 @@ body {
 .modal-body {
     background-color: blue;
     flex: auto;
-}
+} 
 
 #advanced-search {
+    display: none;
+}
+*/
+
+body {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#searchWrapper.active {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#searchWrapper {
+    display: none;
+}
+
+#searchSubmit {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+#weatherWrapper.active {
+    display: block;
+}
+
+#weatherWrapper {
     display: none;
 }
