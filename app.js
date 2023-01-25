@@ -433,7 +433,6 @@ const assumeUsForShortArray = function(locationArray) {
 const displayWeatherIcon = function(weatherData) {
     let weatherIcon = document.querySelector('#weatherIcon')
     let icon = weatherData.weather[0].icon
-    // weatherIcon.src = `http://openweathermap.org/img/wn/${icon}@2x.png`
     weatherIcon.src = `./assets/weatherIcons/${icon}.svg`
 
 }
