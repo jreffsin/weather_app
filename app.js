@@ -307,7 +307,7 @@ const weatherDescriptions = {
 }
 
 const globalVars = {
-    scale: 'f'
+    scale: 'F'
 }
 
 const getWeatherData = async function(locationData) {
@@ -322,17 +322,15 @@ const getWeatherData = async function(locationData) {
 }
 
 const getConvertedTemp = function(data, scale) {
-    let convertTemp = scale === 'c' ? convertKtoC : convertKtoF
+    let convertTemp = scale === 'C' ? convertKtoC : convertKtoF
     return convertTemp(data)
 }
 
 const displayTemp = function(data, scale) {
     let currentTemp = getConvertedTemp(data.main.temp, scale)
     currentTemp = Math.round(currentTemp)
-    let displayScale = scale === 'c' ? 'C' : 'F'
-
     let tempDisplay = document.querySelector('#tempDisplay')
-    tempDisplay.innerHTML = `${currentTemp}\u00B0${displayScale}`
+    tempDisplay.innerHTML = `${currentTemp}\u00B0${globalVars.scale}`
 }
 
 const convertKtoF = function(tempInK) {
@@ -421,9 +419,9 @@ const populateDisplay = async function() {
     displayWeatherDescription(weatherData)
 
     displayFeelsLike(weatherData)
-    // displayHumidity(weatherData)
-    // displayMinTemp(weatherData)
-    // displayMaxTemp(weatherData)
+    displayHumidity(weatherData)
+    displayMinTemp(weatherData)
+    displayMaxTemp(weatherData)
 
     toggleSearchVisibility()
     toggleDisplayVisibility()
@@ -458,7 +456,29 @@ const displayFeelsLike = function(weatherData){
     let tempInK = weatherData.main.feels_like
     let convertedTemp = getConvertedTemp(tempInK, globalVars.scale)
     convertedTemp = Math.round(convertedTemp)
-    feelsLikeElement.innerText = convertedTemp
+    feelsLikeElement.innerText = `${convertedTemp}\u00B0${globalVars.scale}`
+}
+
+const displayHumidity = function(weatherData){
+    let humidityElement = document.querySelector('#humidityDisplay')
+    let humidity = weatherData.main.humidity
+    humidityElement.innerText = humidity + '%'
+}
+
+const displayMinTemp = function(weatherData){
+    let minTempElement = document.querySelector('#minTempDisplay')
+    let tempInK = weatherData.main.temp_min
+    let convertedTemp = getConvertedTemp(tempInK, globalVars.scale)
+    convertedTemp = Math.round(convertedTemp)
+    minTempElement.innerText = `${convertedTemp}\u00B0${globalVars.scale}`
+}
+
+const displayMaxTemp = function(weatherData){
+    let maxTempElement = document.querySelector('#maxTempDisplay')
+    let tempInK = weatherData.main.temp_max
+    let convertedTemp = getConvertedTemp(tempInK, globalVars.scale)
+    convertedTemp = Math.round(convertedTemp)
+    maxTempElement.innerText = `${convertedTemp}\u00B0${globalVars.scale}`
 }
 
 const toggleSearchVisibility = function() {
