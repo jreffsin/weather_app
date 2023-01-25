@@ -306,6 +306,10 @@ const weatherDescriptions = {
     804: 'Overcast'
 }
 
+const globalVars = {
+    scale: 'f'
+}
+
 const getWeatherData = async function(locationData) {
     try {
         let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${locationData.lat}&lon=${locationData.lon}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
@@ -319,11 +323,11 @@ const getWeatherData = async function(locationData) {
 
 const getConvertedTemp = function(data, scale) {
     let convertTemp = scale === 'c' ? convertKtoC : convertKtoF
-    return convertTemp(data.main.temp)
+    return convertTemp(data)
 }
 
 const displayTemp = function(data, scale) {
-    let currentTemp = getConvertedTemp(data, scale)
+    let currentTemp = getConvertedTemp(data.main.temp, scale)
     currentTemp = Math.round(currentTemp)
     let displayScale = scale === 'c' ? 'C' : 'F'
 
@@ -411,10 +415,15 @@ const populateDisplay = async function() {
     console.log(weatherData)
 
 
-    displayTemp(weatherData, 'f')
+    displayTemp(weatherData, globalVars.scale)
     displayLocation(locationData)
     displayWeatherIcon(weatherData)
     displayWeatherDescription(weatherData)
+
+    displayFeelsLike(weatherData)
+    // displayHumidity(weatherData)
+    // displayMinTemp(weatherData)
+    // displayMaxTemp(weatherData)
 
     toggleSearchVisibility()
     toggleDisplayVisibility()
@@ -442,6 +451,14 @@ const displayWeatherDescription = function(weatherData){
     let id = weatherData.weather[0].id
     let weatherDescription = weatherDescriptions[id]
     descriptionElement.innerText = weatherDescription
+}
+
+const displayFeelsLike = function(weatherData){
+    let feelsLikeElement = document.querySelector('#feelsLikeDisplay')
+    let tempInK = weatherData.main.feels_like
+    let convertedTemp = getConvertedTemp(tempInK, globalVars.scale)
+    convertedTemp = Math.round(convertedTemp)
+    feelsLikeElement.innerText = convertedTemp
 }
 
 const toggleSearchVisibility = function() {
