@@ -248,6 +248,64 @@ const countries = {
 
 const states = [ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
 
+const weatherDescriptions = {
+    200: 'Thunderstorm',
+    201: 'Thunderstorm',
+    202: 'Thunderstorm',
+    210: 'Thunderstorm',
+    211: 'Thunderstorm',
+    212: 'Thunderstorm',
+    221: 'Thunderstorm',
+    230: 'Thunderstorm',
+    231: 'Thunderstorm',
+    232: 'Thunderstorm',
+    300: 'Light Rain',
+    301: 'Rain',
+    302: 'Heavy Rain',
+    310: 'Light Rain',
+    311: 'Rain',
+    312: 'Heavy Rain',
+    313: 'Heavy Rain',
+    314: 'Heavy Rain',
+    321: 'Heavy Rain',
+    500: 'Light Rain',
+    501: 'Moderate Rain',
+    502: 'Heavy Rain',
+    503: 'Very Heavy Rain',
+    504: 'Extreme Rain',
+    511: 'Freezing Rain',
+    520: 'Light Rain',
+    521: 'Rain',
+    522: 'Heavy Rain',
+    531: 'Rain',
+    600: 'Light Snow',
+    601: 'Snow',
+    602: 'Heavy Snow',
+    611: 'Sleet',
+    612: 'Light Sleet',
+    613: 'Sleet',
+    615: 'Light Rain and Snow',
+    616: 'Rain and Snow',
+    620: 'Light Snow',
+    621: 'Snow',
+    622: 'Heavy Snow',
+    701: 'Mist',
+    711: 'Smoke',
+    721: 'Haze',
+    731: 'Dust',
+    741: 'Fog',
+    751: 'Sand',
+    761: 'Dust',
+    762: 'Volcanic Ash',
+    771: 'Squall',
+    781: 'Tornado',
+    800: 'Clear',
+    801: 'Scattered Clouds',
+    802: 'Partially Cloudy',
+    803: 'Cloudy',
+    804: 'Overcast'
+}
+
 const getWeatherData = async function(locationData) {
     try {
         let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${locationData.lat}&lon=${locationData.lon}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
@@ -381,8 +439,9 @@ const displayWeatherIcon = function(weatherData) {
 
 const displayWeatherDescription = function(weatherData){
     let descriptionElement = document.querySelector('#weatherDescription')
-    let descriptionData = weatherData.weather[0].description
-    descriptionElement.innerText = descriptionData
+    let id = weatherData.weather[0].id
+    let weatherDescription = weatherDescriptions[id]
+    descriptionElement.innerText = weatherDescription
 }
 
 const toggleSearchVisibility = function() {
