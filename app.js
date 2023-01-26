@@ -384,6 +384,12 @@ const addResetListener = function(){
 const resetDisplay = function(){
     toggleSearchVisibility()
     toggleDisplayVisibility()
+    setFocusToSearch()
+}
+
+const setFocusToSearch = function(){
+    let searchBar = document.querySelector('#locationInput')
+    searchBar.focus()
 }
 
 const getLocationData = async function () {
