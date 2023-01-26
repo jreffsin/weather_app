@@ -314,7 +314,7 @@ const getWeatherData = async function(locationData) {
     try {
         let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${locationData.lat}&lon=${locationData.lon}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
         let data = await response.json()
-        return data
+        storeWeatherData(data)
     } catch (error) {
         console.error('Error fetching weather data from api: ' + error)
         return 'error'
@@ -343,19 +343,47 @@ const convertKtoC = function(tempInK) {
     return tempinC
 }
 
-const addLocationSearchListener = function(){
+const addListeners = function() {
+    addLocationSearchListener()
+    addSwitchScaleListener()
+    addResetListener()
+}
+
+const addLocationSearchListener = function() {
     //handle enter keypress
     let locationInput = document.querySelector('#locationInput')
     locationInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            populateDisplay()
+            runSearch()
             e.preventDefault()
           }
     })
 
     //handle button click
     let searchButton = document.querySelector('#searchSubmit')
-    searchButton.addEventListener('click', populateDisplay)
+    searchButton.addEventListener('click', runSearch)
+}
+
+const addSwitchScaleListener = function() {
+    let scaleImg = document.querySelector('#scaleSwitch')
+    scaleImg.addEventListener('click', switchTempScale)
+}
+
+const switchTempScale = function(){
+    globalVars.scale = globalVars.scale === 'F' ? 'C' : 'F'
+    let scaleImg = document.querySelector('#scaleSwitch')
+    scaleImg.src = `./assets/scale${globalVars.scale}.png`
+    populateDisplay()
+}
+
+const addResetListener = function(){
+    let resetImg = document.querySelector('#resetButton')
+    resetImg.addEventListener('click', resetDisplay)
+}
+
+const resetDisplay = function(){
+    toggleSearchVisibility()
+    toggleDisplayVisibility()
 }
 
 const getLocationData = async function () {
@@ -367,10 +395,14 @@ const getLocationData = async function () {
         if (data.length === 0){
             throw new Error('Could not find location from input')
         }
-        return data[0]
+        storeLocationData(data[0])
     } catch(error){
         console.error(error)
     }
+}
+
+const storeLocationData = function(locationData) {
+    globalVars.locationData = locationData
 }
 
 const parseLocationInput = function(){
@@ -382,7 +414,6 @@ const parseLocationInput = function(){
     locationArray.forEach((element, i) => {
         locationString = locationString === '' ? element.trim() : locationString + ',' + element.trim()
     });
-    console.log(locationString)
     try {
         if (locationArray[0] === ''){
             throw new Error('Empty location input')
@@ -405,25 +436,39 @@ const displayLocation = function (locationData){
     locationDisplayCountry.innerText = countries[locationData.country]
 }
 
-const populateDisplay = async function() {
-    let locationData = await getLocationData()
-    console.log(locationData)
-    let weatherData = await getWeatherData(locationData)
-    console.log(weatherData)
+const populateDisplay = function() {
+    let weatherData = globalVars.weatherData
+    let locationData = globalVars.locationData
+    let scale = globalVars.scale
 
-
-    displayTemp(weatherData, globalVars.scale)
+    displayTemp(weatherData, scale)
     displayLocation(locationData)
     displayWeatherIcon(weatherData)
     displayWeatherDescription(weatherData)
-
     displayFeelsLike(weatherData)
     displayHumidity(weatherData)
     displayMinTemp(weatherData)
     displayMaxTemp(weatherData)
 
-    toggleSearchVisibility()
-    toggleDisplayVisibility()
+    toggleDisplaysIfSearching()
+}
+
+const toggleDisplaysIfSearching = function() {
+    let searchWrapper = document.querySelector('#searchWrapper')
+    if (searchWrapper.classList.contains('active')){
+        toggleSearchVisibility()
+        toggleDisplayVisibility()
+    }
+}
+
+const runSearch = async function() {
+    await getLocationData()
+    await getWeatherData(globalVars.locationData)
+    populateDisplay()
+}
+
+const storeWeatherData = function(weatherData){
+    globalVars.weatherData = weatherData
 }
 
 const assumeUsForShortArray = function(locationArray) {
@@ -490,4 +535,4 @@ const toggleDisplayVisibility = function() {
     weatherWrapper.classList.toggle('active')
 }
 
-addLocationSearchListener()
+addListeners()
