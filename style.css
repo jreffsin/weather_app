@@ -54,6 +54,7 @@ body {
     width: 100vw;
     position: relative;
     background-color: #effbf7;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 footer {
@@ -74,13 +75,33 @@ footer {
     align-items: center;
 }
 
+#searchLabel{
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+#locationInput {
+    border: transparent;
+    padding-left: 20px;
+    border-radius: 20px;
+    outline: none;
+    line-height: 40px;
+    font-size: 28px;
+}
+
 #searchWrapper {
     display: none;
 }
 
+#searchBarWrapper {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #searchSubmit {
-    height: 20px;
-    width: 20px;
+    height: 40px;
+    width: 40px;
     cursor: pointer;
 }
 
