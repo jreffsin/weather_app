@@ -396,7 +396,7 @@ const getLocationData = async function () {
     let locationString = parseLocationInput()
     clearLocationInput()
     try{
-        let response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationString}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
+        let response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${locationString}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
         let data = await response.json()
         if (data.length === 0){
             throw new Error('Could not find location from input')
