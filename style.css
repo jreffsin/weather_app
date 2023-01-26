@@ -62,6 +62,7 @@ footer {
     bottom: 0;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding-bottom: 10px;
 }
 
 #searchWrapper.active {
@@ -78,6 +79,7 @@ footer {
 #searchLabel{
     font-size: 50px;
     margin-bottom: 20px;
+    color: #4a8a8a;
 }
 
 #locationInput {
@@ -87,6 +89,7 @@ footer {
     outline: none;
     line-height: 40px;
     font-size: 28px;
+    /* color: #4a8a8a; */
 }
 
 #searchWrapper {
@@ -103,6 +106,7 @@ footer {
     height: 40px;
     width: 40px;
     cursor: pointer;
+    filter: invert(49%) sepia(26%) saturate(609%) hue-rotate(131deg) brightness(94%) contrast(91%);
 }
 
 #searchSubmit:hover {
@@ -134,10 +138,12 @@ footer {
 
 .headerIcon {
     cursor: pointer;
+    filter: invert(49%) sepia(26%) saturate(609%) hue-rotate(131deg) brightness(94%) contrast(91%);
 }
 
 .headerIcon:hover {
     filter: invert(78%) sepia(56%) saturate(507%) hue-rotate(114deg) brightness(81%) contrast(90%);
+    /* filter: invert(49%) sepia(26%) saturate(609%) hue-rotate(131deg) brightness(94%) contrast(91%); */
 }
 
 #resetButton {
@@ -198,4 +204,8 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 5px;
+}
+
+.smallHeader {
+    color: #4a8a8a;
 }
