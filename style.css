@@ -116,9 +116,6 @@ footer {
 }
 
 .headerIcon:hover {
-    /* background-color: red; */
-    /* color: white; */
-
     filter: invert(78%) sepia(56%) saturate(507%) hue-rotate(114deg) brightness(81%) contrast(90%);
 }
 
