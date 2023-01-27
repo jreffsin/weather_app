@@ -94,6 +94,7 @@ footer {
 
 #searchWrapper {
     display: none;
+    position: relative
 }
 
 #searchBarWrapper {
@@ -112,6 +113,46 @@ footer {
 #searchSubmit:hover {
     filter: invert(78%) sepia(56%) saturate(507%) hue-rotate(114deg) brightness(81%) contrast(90%);
 }
+
+.errorMsg {
+    height: 50px;
+    width: 300px;
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background-color: red;
+    border-radius: 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    opacity: 0;
+}
+
+  .errorMsg.showError {
+    -webkit-animation: fadein 0.5s forwards, fadeout 1s 2.5s forwards;
+    animation: fadein 0.5s forwards, fadeout 1s 2.5s forwards;
+  }
+  
+  /* Animations to fade the error in and out */
+  @-webkit-keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {opacity: 1;}
+    to {opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {opacity: 1;}
+    to {opacity: 0;}
+  }
 
 #weatherWrapper.active {
     display: block;

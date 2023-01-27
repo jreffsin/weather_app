@@ -404,6 +404,7 @@ const getLocationData = async function () {
         storeLocationData(data[0])
     } catch(error){
         console.error(error)
+        globalVars.locationData = -1
     }
 }
 
@@ -469,8 +470,11 @@ const toggleDisplaysIfSearching = function() {
 
 const runSearch = async function() {
     await getLocationData()
-    await getWeatherData(globalVars.locationData)
-    populateDisplay()
+    let error = checkError()
+    if (!error){
+        await getWeatherData(globalVars.locationData)
+        populateDisplay()
+    }
 }
 
 const storeWeatherData = function(weatherData){
@@ -539,6 +543,16 @@ const toggleSearchVisibility = function() {
 const toggleDisplayVisibility = function() {
     let weatherWrapper = document.querySelector('#weatherWrapper')
     weatherWrapper.classList.toggle('active')
+}
+
+const checkError = function() {
+    if (globalVars.locationData !== -1){return false}
+    let errorElem = document.querySelector('.errorMsg')
+    errorElem.classList.add('showError')
+    setTimeout(() => {
+        errorElem.classList.remove('showError')
+    }, 4000);
+    return true
 }
 
 addListeners()
