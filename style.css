@@ -124,7 +124,7 @@ footer {
 }
 
 .errorMsg {
-    height: 50px;
+    /* height: 50px; */
     width: 300px;
     position: absolute;
     bottom: -100px;
@@ -135,6 +135,7 @@ footer {
     padding: 15px;
     box-sizing: border-box;
     opacity: 0;
+    text-align: center;
 }
 
   .errorMsg.showError {
