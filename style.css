@@ -63,6 +63,8 @@ footer {
     left: 50%;
     transform: translate(-50%, -50%);
     padding-bottom: 10px;
+    width: 100vw;
+    text-align: center;
 }
 
 #searchWrapper.active {
@@ -74,6 +76,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100vw;
 }
 
 #searchLabel{
@@ -124,7 +127,6 @@ footer {
 }
 
 .errorMsg {
-    /* height: 50px; */
     width: 300px;
     position: absolute;
     bottom: -100px;
@@ -259,4 +261,48 @@ footer {
 
 .smallHeader {
     color: #4a8a8a;
+}
+
+@media (max-width: 500px) {
+    #searchLabel{
+        font-size: 40px;
+    }
+
+    #locationInput {
+        width: 300px;
+    }
+}
+
+@media (max-width: 415px) {
+    #searchLabel{
+        font-size: 40px;
+    }
+
+    #locationInput {
+        width: 300px;
+    }
+}
+
+@media (max-width: 380px) {
+    #searchLabel{
+        font-size: 36px;
+    }
+
+    #locationInput {
+        width: 280px;
+    }
+}
+
+@media (max-width: 360px) {
+
+    #locationInput {
+        width: 250px;
+    }
+}
+
+@media (max-width: 340px) {
+
+    #locationInput {
+        width: 230px;
+    }
 }
