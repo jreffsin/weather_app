@@ -394,6 +394,10 @@ const setFocusToSearch = function(){
 
 const getLocationData = async function () {
     let locationString = parseLocationInput()
+    if (!locationString){
+        globalVars.locationData = -1
+        return
+    }
     clearLocationInput()
     try{
         let response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${locationString}&appid=5fc5590dfda3f2e525c97e184b48dc1b`)
@@ -469,12 +473,18 @@ const toggleDisplaysIfSearching = function() {
 }
 
 const runSearch = async function() {
+    toggleLoadImage()
     await getLocationData()
     let error = checkError()
-    if (!error){
-        await getWeatherData(globalVars.locationData)
-        populateDisplay()
+    if (error) {
+        showError()
+        setFocusToSearch()
+        toggleLoadImage()
+        return
     }
+    await getWeatherData(globalVars.locationData)
+    populateDisplay()
+    toggleLoadImage()
 }
 
 const storeWeatherData = function(weatherData){
@@ -547,12 +557,22 @@ const toggleDisplayVisibility = function() {
 
 const checkError = function() {
     if (globalVars.locationData !== -1){return false}
+    return true
+}
+
+const showError = function() {
     let errorElem = document.querySelector('.errorMsg')
     errorElem.classList.add('showError')
     setTimeout(() => {
         errorElem.classList.remove('showError')
     }, 4000);
-    return true
+}
+
+const toggleLoadImage = function (){
+    let searchSubmit = document.querySelector('#searchSubmit')
+    searchSubmit.src = searchSubmit.classList.contains('search') ? './assets/loading.gif' : './assets/magnify.svg'
+    searchSubmit.classList.toggle('search')
+    searchSubmit.classList.toggle('load')
 }
 
 addListeners()

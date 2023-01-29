@@ -106,11 +106,20 @@ footer {
 #searchSubmit {
     height: 40px;
     width: 40px;
+    padding-left: 5px;
+}
+
+#searchSubmit.search {
     cursor: pointer;
     filter: invert(49%) sepia(26%) saturate(609%) hue-rotate(131deg) brightness(94%) contrast(91%);
 }
 
-#searchSubmit:hover {
+#searchSubmit.load {
+    cursor: default;
+    filter: none;
+}
+
+#searchSubmit.search:hover {
     filter: invert(78%) sepia(56%) saturate(507%) hue-rotate(114deg) brightness(81%) contrast(90%);
 }
 
