@@ -263,6 +263,31 @@ footer {
     color: #4a8a8a;
 }
 
+@media (max-width: 675px) {
+    #mainWeather {
+        display: grid;
+        grid-template-columns: 1fr;
+        height: 225px;
+    }
+
+    #weatherWrapper.active {
+        display: block;
+        width: 300px;
+        margin-top: 50px;
+    }
+
+    #leftMainWeather {
+        border-right: none;
+    }
+
+    #smallWeather {
+        height: 150px;
+        grid-template-columns: 50% 50%;
+        margin-bottom: 25px;
+        /* padding-bottom: 50px; */
+    }
+}
+
 @media (max-width: 500px) {
     #searchLabel{
         font-size: 40px;
