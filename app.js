@@ -356,7 +356,7 @@ const addLocationSearchListener = function() {
         if (e.key === 'Enter') {
             runSearch()
             e.preventDefault()
-            e.blur()
+            locationInput.blur()
           }
     })
 
